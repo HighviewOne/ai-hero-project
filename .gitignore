@@ -6,6 +6,4 @@ __pycache__/
 *.egg-info/
 logs/
 fastapi_docs.json
-fastapi_chunks_sliding.json
 fastapi_chunks_sections.json
-fastapi_embeddings.npy

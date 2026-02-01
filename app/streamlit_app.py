@@ -7,6 +7,12 @@ load_dotenv()
 
 import streamlit as st
 
+# Load API keys from Streamlit secrets (for cloud deployment) or .env (local)
+if hasattr(st, 'secrets'):
+    for key in ['GEMINI_API_KEY', 'OPENAI_API_KEY']:
+        if key in st.secrets:
+            os.environ[key] = st.secrets[key]
+
 # Add project root to path so app imports work
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
