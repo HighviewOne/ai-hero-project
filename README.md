@@ -1,5 +1,7 @@
 # FastAPI Documentation Agent
 
+[**Try the live app**](https://ai-hero-project-57srgxkah4wx4p2wxnnu7d.streamlit.app/)
+
 An AI-powered agent that answers questions about the FastAPI web framework by searching the official documentation. Built with Pydantic AI, sentence-transformers, and Streamlit.
 
 ## Overview
