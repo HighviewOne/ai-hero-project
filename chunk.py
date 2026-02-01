@@ -1,6 +1,8 @@
 import json
 import re
 
+from config import DOCS_FILE, CHUNKS_FILE, CHUNKS_SECTIONS_FILE
+
 
 def sliding_window(seq, size, step):
     if size <= 0 or step <= 0:
@@ -72,8 +74,8 @@ def chunk_docs_by_sections(docs, level=2):
 
 
 if __name__ == "__main__":
-    # Load FastAPI docs from Day 1
-    with open('fastapi_docs.json', 'r', encoding='utf-8') as f:
+    # Load docs
+    with open(DOCS_FILE, 'r', encoding='utf-8') as f:
         fastapi_docs = json.load(f)
 
     print(f"Total documents loaded: {len(fastapi_docs)}")
@@ -98,13 +100,13 @@ if __name__ == "__main__":
     print(f"  Text: {sec_chunks[0]['section'][:200]}...")
 
     # Save both results
-    with open('fastapi_chunks_sliding.json', 'w', encoding='utf-8') as f:
+    with open(CHUNKS_FILE, 'w', encoding='utf-8') as f:
         json.dump(sw_chunks, f, indent=2, ensure_ascii=False)
-    print(f"\nSaved sliding window chunks to fastapi_chunks_sliding.json")
+    print(f"\nSaved sliding window chunks to {CHUNKS_FILE}")
 
-    with open('fastapi_chunks_sections.json', 'w', encoding='utf-8') as f:
+    with open(CHUNKS_SECTIONS_FILE, 'w', encoding='utf-8') as f:
         json.dump(sec_chunks, f, indent=2, ensure_ascii=False)
-    print(f"Saved section chunks to fastapi_chunks_sections.json")
+    print(f"Saved section chunks to {CHUNKS_SECTIONS_FILE}")
 
     # --- Comparison ---
     content_lengths = [len(doc.get('content', '')) for doc in fastapi_docs]

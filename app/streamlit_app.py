@@ -16,6 +16,7 @@ if hasattr(st, 'secrets'):
 # Add project root to path so app imports work
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from config import PROJECT_NAME, CHUNKS_FILE, EMBEDDINGS_FILE
 from app.search_tools import load_search_tool
 from app.search_agent import create_agent
 from app.logs import log_interaction
@@ -24,13 +25,13 @@ from app.logs import log_interaction
 # ── Page config ──────────────────────────────────────────────────
 
 st.set_page_config(
-    page_title="FastAPI Docs Agent",
+    page_title=f"{PROJECT_NAME} Docs Agent",
     page_icon="⚡",
     layout="centered",
 )
 
-st.title("FastAPI Documentation Agent")
-st.caption("Ask questions about FastAPI and get answers from the official docs.")
+st.title(f"{PROJECT_NAME} Documentation Agent")
+st.caption(f"Ask questions about {PROJECT_NAME} and get answers from the official docs.")
 
 
 # ── Initialize resources (cached) ───────────────────────────────
@@ -39,8 +40,8 @@ st.caption("Ask questions about FastAPI and get answers from the official docs."
 def init_search_tool():
     """Load search indexes once and cache across reruns."""
     project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    chunks_path = os.path.join(project_dir, 'fastapi_chunks_sliding.json')
-    embeddings_path = os.path.join(project_dir, 'fastapi_embeddings.npy')
+    chunks_path = os.path.join(project_dir, CHUNKS_FILE)
+    embeddings_path = os.path.join(project_dir, EMBEDDINGS_FILE)
     return load_search_tool(chunks_path, embeddings_path)
 
 
@@ -71,7 +72,7 @@ for msg in st.session_state.messages:
 
 # ── Chat input ───────────────────────────────────────────────────
 
-if prompt := st.chat_input("Ask about FastAPI..."):
+if prompt := st.chat_input(f"Ask about {PROJECT_NAME}..."):
     # Show user message
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):

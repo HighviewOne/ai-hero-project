@@ -5,11 +5,13 @@ from sentence_transformers import SentenceTransformer
 from minsearch import Index, VectorSearch
 from tqdm.auto import tqdm
 
+from config import CHUNKS_FILE, EMBEDDINGS_FILE, EMBEDDING_MODEL
+
 
 class SearchTool:
     """Encapsulates text and vector search over chunked documents."""
 
-    def __init__(self, chunks, embedding_model_name='multi-qa-distilbert-cos-v1',
+    def __init__(self, chunks, embedding_model_name=EMBEDDING_MODEL,
                  embeddings_path=None):
         self.chunks = chunks
         self.model = SentenceTransformer(embedding_model_name)
@@ -74,8 +76,8 @@ class SearchTool:
         return "\n\n---\n\n".join(output)
 
 
-def load_search_tool(chunks_path='fastapi_chunks_sliding.json',
-                     embeddings_path='fastapi_embeddings.npy'):
+def load_search_tool(chunks_path=CHUNKS_FILE,
+                     embeddings_path=EMBEDDINGS_FILE):
     """Load chunks from file and create a SearchTool."""
     print(f"Loading chunks from {chunks_path}...")
     with open(chunks_path, 'r', encoding='utf-8') as f:

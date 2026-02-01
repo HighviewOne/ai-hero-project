@@ -1,11 +1,12 @@
 from pydantic_ai import Agent
 
+from config import LLM_MODEL, PROJECT_NAME
 from app.search_tools import SearchTool
 
 
-SYSTEM_PROMPT = """\
-You are a helpful FastAPI documentation assistant. Your job is to answer \
-questions about the FastAPI web framework accurately and thoroughly.
+SYSTEM_PROMPT = f"""\
+You are a helpful {PROJECT_NAME} documentation assistant. Your job is to answer \
+questions about the {PROJECT_NAME} web framework accurately and thoroughly.
 
 When a user asks a question:
 1. Always search the documentation first before answering. Do not rely on \
@@ -21,20 +22,20 @@ Always mention which documentation file the information comes from.\
 """
 
 
-def create_agent(search_tool: SearchTool, model: str = 'google-gla:gemini-2.0-flash'):
+def create_agent(search_tool: SearchTool, model: str = LLM_MODEL):
     """Create a Pydantic AI agent with the search tool."""
     agent = Agent(
         model,
         system_prompt=SYSTEM_PROMPT,
-        name='fastapi_docs_agent',
+        name='docs_agent',
     )
 
     @agent.tool_plain
-    def search_fastapi_docs(query: str) -> str:
-        """Search the FastAPI documentation using hybrid search (text + vector).
+    def search_docs(query: str) -> str:
+        f"""Search the {PROJECT_NAME} documentation using hybrid search (text + vector).
 
         Args:
-            query: The search query about FastAPI.
+            query: The search query about {PROJECT_NAME}.
 
         Returns:
             Matching documentation excerpts.
@@ -43,7 +44,7 @@ def create_agent(search_tool: SearchTool, model: str = 'google-gla:gemini-2.0-fl
 
     @agent.tool_plain
     def search_text_only(query: str) -> str:
-        """Search FastAPI docs using keyword/text search. Good for exact terms.
+        f"""Search {PROJECT_NAME} docs using keyword/text search. Good for exact terms.
 
         Args:
             query: The keyword search query.

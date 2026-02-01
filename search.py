@@ -5,8 +5,10 @@ from tqdm.auto import tqdm
 from sentence_transformers import SentenceTransformer
 from minsearch import Index, VectorSearch
 
+from config import CHUNKS_FILE, EMBEDDINGS_FILE, EMBEDDING_MODEL
 
-def load_chunks(filepath='fastapi_chunks_sliding.json'):
+
+def load_chunks(filepath=CHUNKS_FILE):
     with open(filepath, 'r', encoding='utf-8') as f:
         return json.load(f)
 
@@ -65,7 +67,7 @@ def print_results(results, label, max_text=200):
 
 if __name__ == "__main__":
     print("Loading chunks...")
-    chunks = load_chunks('fastapi_chunks_sliding.json')
+    chunks = load_chunks(CHUNKS_FILE)
     print(f"Loaded {len(chunks)} chunks")
 
     # 1. Text search
@@ -78,7 +80,7 @@ if __name__ == "__main__":
 
     # 2. Vector search
     print("Loading embedding model...")
-    model = SentenceTransformer('multi-qa-distilbert-cos-v1')
+    model = SentenceTransformer(EMBEDDING_MODEL)
 
     print("Building vector index (this may take a while)...")
     vec_idx, embeddings = build_vector_index(chunks, model)
@@ -91,5 +93,5 @@ if __name__ == "__main__":
     print_results(results, f"Hybrid Search: '{query}'")
 
     # Save embeddings for reuse
-    np.save('fastapi_embeddings.npy', embeddings)
-    print("Saved embeddings to fastapi_embeddings.npy")
+    np.save(EMBEDDINGS_FILE, embeddings)
+    print(f"Saved embeddings to {EMBEDDINGS_FILE}")

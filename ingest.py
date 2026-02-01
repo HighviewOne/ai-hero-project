@@ -4,6 +4,8 @@ import zipfile
 import requests
 import frontmatter
 
+from config import REPO_OWNER, REPO_NAME, REPO_BRANCH, DOCS_FILE
+
 
 def read_repo_data(repo_owner, repo_name, branch="main"):
     """
@@ -52,17 +54,16 @@ def read_repo_data(repo_owner, repo_name, branch="main"):
 
 
 if __name__ == "__main__":
-    # Download FastAPI documentation
-    fastapi_docs = read_repo_data('fastapi', 'fastapi', branch='master')
+    # Download documentation
+    fastapi_docs = read_repo_data(REPO_OWNER, REPO_NAME, branch=REPO_BRANCH)
 
     print(f"\nTotal documents: {len(fastapi_docs)}")
 
     # Save to JSON
-    output_file = "fastapi_docs.json"
-    with open(output_file, 'w', encoding='utf-8') as f:
+    with open(DOCS_FILE, 'w', encoding='utf-8') as f:
         json.dump(fastapi_docs, f, indent=2, ensure_ascii=False)
 
-    print(f"Saved to {output_file}")
+    print(f"Saved to {DOCS_FILE}")
 
     # Show sample
     print("\nSample documents:")

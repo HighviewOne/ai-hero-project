@@ -8,6 +8,7 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 from pydantic_ai import Agent, RunContext
 
+from config import CHUNKS_FILE, EMBEDDINGS_FILE, EMBEDDING_MODEL, LLM_MODEL, PROJECT_NAME
 from search import (
     load_chunks,
     build_text_index,
@@ -21,17 +22,17 @@ from search import (
 # --- Load data and build indexes at startup ---
 
 print("Loading chunks...")
-chunks = load_chunks('fastapi_chunks_sliding.json')
+chunks = load_chunks(CHUNKS_FILE)
 print(f"Loaded {len(chunks)} chunks")
 
 print("Building text index...")
 text_idx = build_text_index(chunks)
 
 print("Loading embedding model...")
-embedding_model = SentenceTransformer('multi-qa-distilbert-cos-v1')
+embedding_model = SentenceTransformer(EMBEDDING_MODEL)
 
 print("Loading cached embeddings...")
-embeddings = np.load('fastapi_embeddings.npy')
+embeddings = np.load(EMBEDDINGS_FILE)
 
 from minsearch import VectorSearch
 vec_idx = VectorSearch()
@@ -42,9 +43,9 @@ print("Indexes ready!\n")
 
 # --- Define the Pydantic AI agent ---
 
-SYSTEM_PROMPT = """\
-You are a helpful FastAPI documentation assistant. Your job is to answer \
-questions about the FastAPI web framework accurately and thoroughly.
+SYSTEM_PROMPT = f"""\
+You are a helpful {PROJECT_NAME} documentation assistant. Your job is to answer \
+questions about the {PROJECT_NAME} web framework accurately and thoroughly.
 
 When a user asks a question:
 1. Always search the documentation first before answering. Do not rely on \
@@ -59,17 +60,17 @@ Keep answers concise but complete. Use code examples from the docs when relevant
 """
 
 agent = Agent(
-    'google-gla:gemini-2.0-flash',
+    LLM_MODEL,
     system_prompt=SYSTEM_PROMPT,
 )
 
 
 @agent.tool_plain
-def search_fastapi_docs(query: str) -> str:
-    """Search the FastAPI documentation using hybrid search (text + vector).
+def search_docs(query: str) -> str:
+    f"""Search the {PROJECT_NAME} documentation using hybrid search (text + vector).
 
     Args:
-        query: The search query about FastAPI.
+        query: The search query about {PROJECT_NAME}.
 
     Returns:
         Matching documentation excerpts.
@@ -87,7 +88,7 @@ def search_fastapi_docs(query: str) -> str:
 
 @agent.tool_plain
 def search_text_only(query: str) -> str:
-    """Search FastAPI docs using keyword/text search. Good for exact terms.
+    f"""Search {PROJECT_NAME} docs using keyword/text search. Good for exact terms.
 
     Args:
         query: The keyword search query.
@@ -110,8 +111,8 @@ def search_text_only(query: str) -> str:
 
 async def main():
     print("=" * 60)
-    print("FastAPI Documentation Agent (Pydantic AI)")
-    print("Type your questions about FastAPI. Type 'quit' to exit.")
+    print(f"{PROJECT_NAME} Documentation Agent (Pydantic AI)")
+    print(f"Type your questions about {PROJECT_NAME}. Type 'quit' to exit.")
     print("=" * 60)
 
     message_history = None

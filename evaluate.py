@@ -13,6 +13,7 @@ from pydantic_ai.messages import ModelMessagesTypeAdapter
 from sentence_transformers import SentenceTransformer
 from minsearch import VectorSearch
 
+from config import CHUNKS_FILE, EMBEDDINGS_FILE, EMBEDDING_MODEL, EVAL_MODEL, PROJECT_NAME
 from search import (
     load_chunks,
     build_text_index,
@@ -25,7 +26,7 @@ from search import (
 NUM_QUESTIONS = 5          # Keep low to stay within Gemini free tier (~20 req/day)
 DELAY_BETWEEN_CALLS = 5    # Seconds between API calls (respect RPM limits)
 MAX_RETRIES = 3            # Retry on rate limit errors
-MODEL = 'google-gla:gemini-2.0-flash-lite'
+MODEL = EVAL_MODEL
 
 
 # ── Retry helper ─────────────────────────────────────────────────
@@ -50,17 +51,17 @@ async def retry_with_backoff(coro_fn, *args, max_retries=MAX_RETRIES, **kwargs):
 # ── 1. Load data and build indexes ──────────────────────────────
 
 print("Loading chunks...")
-chunks = load_chunks('fastapi_chunks_sliding.json')
+chunks = load_chunks(CHUNKS_FILE)
 print(f"Loaded {len(chunks)} chunks")
 
 print("Building text index...")
 text_idx = build_text_index(chunks)
 
 print("Loading embedding model...")
-embedding_model = SentenceTransformer('multi-qa-distilbert-cos-v1')
+embedding_model = SentenceTransformer(EMBEDDING_MODEL)
 
 print("Loading cached embeddings...")
-embeddings = np.load('fastapi_embeddings.npy')
+embeddings = np.load(EMBEDDINGS_FILE)
 vec_idx = VectorSearch()
 vec_idx.fit(embeddings, chunks)
 
@@ -69,9 +70,9 @@ print("Indexes ready!\n")
 
 # ── 2. FastAPI docs agent (same as agent.py) ────────────────────
 
-SYSTEM_PROMPT = """\
-You are a helpful FastAPI documentation assistant. Your job is to answer \
-questions about the FastAPI web framework accurately and thoroughly.
+SYSTEM_PROMPT = f"""\
+You are a helpful {PROJECT_NAME} documentation assistant. Your job is to answer \
+questions about the {PROJECT_NAME} web framework accurately and thoroughly.
 
 When a user asks a question:
 1. Always search the documentation first before answering. Do not rely on \
@@ -88,16 +89,16 @@ Keep answers concise but complete. Use code examples from the docs when relevant
 docs_agent = Agent(
     MODEL,
     system_prompt=SYSTEM_PROMPT,
-    name='fastapi_docs_agent',
+    name='docs_agent',
 )
 
 
 @docs_agent.tool_plain
-def search_fastapi_docs(query: str) -> str:
-    """Search the FastAPI documentation using hybrid search (text + vector).
+def search_docs(query: str) -> str:
+    f"""Search the {PROJECT_NAME} documentation using hybrid search (text + vector).
 
     Args:
-        query: The search query about FastAPI.
+        query: The search query about {PROJECT_NAME}.
 
     Returns:
         Matching documentation excerpts.
@@ -114,7 +115,7 @@ def search_fastapi_docs(query: str) -> str:
 
 @docs_agent.tool_plain
 def search_text_only(query: str) -> str:
-    """Search FastAPI docs using keyword/text search. Good for exact terms.
+    f"""Search {PROJECT_NAME} docs using keyword/text search. Good for exact terms.
 
     Args:
         query: The keyword search query.
@@ -173,9 +174,9 @@ class EvaluationChecklist(BaseModel):
     summary: str
 
 
-EVAL_PROMPT = """\
+EVAL_PROMPT = f"""\
 You are an evaluation agent. You will be given a user question and an agent's \
-response about FastAPI documentation.
+response about {PROJECT_NAME} documentation.
 
 Evaluate the response on EACH of these criteria. For each, provide a \
 justification and whether it passes (true/false):
@@ -229,7 +230,7 @@ class QuestionsList(BaseModel):
 
 QUESTION_GEN_PROMPT = f"""\
 You are a test data generator. Generate realistic questions that a developer \
-might ask about the FastAPI web framework. Questions should cover a variety \
+might ask about the {PROJECT_NAME} web framework. Questions should cover a variety \
 of topics: routing, dependencies, authentication, middleware, testing, \
 deployment, databases, WebSockets, background tasks, etc.
 
@@ -249,7 +250,7 @@ async def generate_test_questions():
     print(f"Generating {NUM_QUESTIONS} test questions...")
     result = await retry_with_backoff(
         question_generator.run,
-        f"Generate {NUM_QUESTIONS} FastAPI questions."
+        f"Generate {NUM_QUESTIONS} {PROJECT_NAME} questions."
     )
     questions = result.output.questions
     print(f"Generated {len(questions)} questions")

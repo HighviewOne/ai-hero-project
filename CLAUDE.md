@@ -99,6 +99,27 @@
   - Structured output agent (with `output_type`): `result.output` to get parsed Pydantic model
   - Message history: `result.all_messages()`
 
+## Git & GitHub
+- Repo: https://github.com/HighviewOne/ai-hero-project
+- Branch: `master`
+- Commits:
+  - `aec1192` Day 1: FastAPI docs ingestion pipeline
+  - `90eb885` Day 2: Add document chunking (sliding window + section-based)
+  - `ec4849a` Complete AI Agents Crash Course (Days 3-7)
+  - `89de021` Add data files and Streamlit Cloud support for deployment
+  - `5b17ebd` Add live app URL to README
+- All code pushed and up to date
+
+## Deployment
+- **Live app:** https://ai-hero-project-57srgxkah4wx4p2wxnnu7d.streamlit.app/
+- Deployed to Streamlit Cloud
+- Main file: `app/streamlit_app.py`
+- API key stored in Streamlit secrets (GEMINI_API_KEY)
+- Data files (fastapi_chunks_sliding.json, fastapi_embeddings.npy) committed to repo for cloud access
+
 ## Status
-- ALL 7 DAYS COMPLETE
-- Optional next steps: deploy to Streamlit Cloud, create demo video, share on social media
+- ALL 7 DAYS COMPLETE — course finished
+- All code committed and pushed to GitHub
+- App deployed to Streamlit Cloud
+- LinkedIn and Bluesky posts drafted for sharing
+- Optional next steps: create demo video, post on social media
