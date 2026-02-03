@@ -123,3 +123,9 @@
 - App deployed to Streamlit Cloud
 - LinkedIn and Bluesky posts drafted for sharing
 - Optional next steps: create demo video, post on social media
+
+## Follow-on Project: GraphRAG
+- Location: `/home/highview/graphrag-project/`
+- Uses Microsoft GraphRAG to build a knowledge graph from FastAPI docs
+- Same GEMINI_API_KEY, same FastAPI docs source
+- See `/home/highview/graphrag-project/CLAUDE.md` for details

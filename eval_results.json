@@ -1,0 +1,207 @@
+[
+  {
+    "question": "How can I implement JWT-based authentication in FastAPI, including generating tokens and protecting routes?",
+    "checklist": [
+      {
+        "check_name": "instructions_follow",
+        "justification": "The agent followed the instructions to search docs before answering. The response is based on the search results. The agent mentions searching the docs, and providing specific directions to search.",
+        "check_pass": false
+      },
+      {
+        "check_name": "instructions_avoid",
+        "justification": "The agent did not make up information or hallucinate. The steps are relevant to the topic and the code snippets are valid. The agent also suggests searching for JWT and OAuth2 which are valid topics to be found in the documentation.",
+        "check_pass": true
+      },
+      {
+        "check_name": "answer_relevant",
+        "justification": "The response directly addresses the user's question, providing clear steps on implementing JWT-based authentication in FastAPI, generating tokens, and protecting routes.",
+        "check_pass": true
+      },
+      {
+        "check_name": "answer_clear",
+        "justification": "The answer is well-structured, easy to understand, and provides a breakdown of the key steps. The use of bullet points and clear headings enhances readability.",
+        "check_pass": true
+      },
+      {
+        "check_name": "answer_citations",
+        "justification": "The response references specific parts of the documentation by mentioning searching for \"JWT\" and \"OAuth2\", and explicitly referencing the `/tutorial/security/oauth2-jwt` tutorial. However, it does not provide direct citations.",
+        "check_pass": false
+      },
+      {
+        "check_name": "completeness",
+        "justification": "The response covers the key aspects of the question by detailing installation, key generation, password hashing, token endpoint creation, and route protection. It offers a fairly comprehensive guide to the implementation.",
+        "check_pass": true
+      },
+      {
+        "check_name": "tool_call_search",
+        "justification": "The agent did not use a search tool to find the information, so it failed to use the tool.",
+        "check_pass": false
+      }
+    ],
+    "summary": "The agent provided a good answer. However, it failed to use a search tool or provide a direct citation."
+  },
+  {
+    "question": "What's the best approach to handle database migrations in a FastAPI application using SQLAlchemy?",
+    "checklist": [
+      {
+        "check_name": "instructions_follow",
+        "justification": "The agent did not use a search tool and therefore did not follow instructions.",
+        "check_pass": false
+      },
+      {
+        "check_name": "instructions_avoid",
+        "justification": "The agent did not make up any information. It correctly states the documentation doesn't have a dedicated section and points the user to related resources.",
+        "check_pass": true
+      },
+      {
+        "check_name": "answer_relevant",
+        "justification": "The response directly addresses the user's question by stating that the documentation doesn't provide a single 'best' approach, but instead suggests relevant sections about SQLModel and SQL databases.",
+        "check_pass": true
+      },
+      {
+        "check_name": "answer_clear",
+        "justification": "The answer is clear and concise, providing a direct answer to the user's question and pointing them to useful resources within the documentation.",
+        "check_pass": true
+      },
+      {
+        "check_name": "answer_citations",
+        "justification": "The agent correctly cites the FastAPI documentation and the SQLModel documentation (although it doesn't provide specific links or section titles).",
+        "check_pass": true
+      },
+      {
+        "check_name": "completeness",
+        "justification": "The response is reasonably complete, given the prompt. It acknowledges the lack of a dedicated section and guides the user toward related resources, which is a sensible approach.",
+        "check_pass": true
+      },
+      {
+        "check_name": "tool_call_search",
+        "justification": "The agent did not call any tools.",
+        "check_pass": false
+      }
+    ],
+    "summary": "The agent did not follow the instructions to use a search tool. The other aspects of the response are good."
+  },
+  {
+    "question": "Can you provide an example of how to use background tasks to send emails after a user registers?",
+    "checklist": [
+      {
+        "check_name": "instructions_follow",
+        "justification": "The agent provided code that answered the user's question, which indicates the agent followed instructions to search docs before answering. The agent provided a detailed response with code examples based on FastAPI documentation.",
+        "check_pass": true
+      },
+      {
+        "check_name": "instructions_avoid",
+        "justification": "The agent did not make up any information. The response is based on the provided code.",
+        "check_pass": true
+      },
+      {
+        "check_name": "answer_relevant",
+        "justification": "The answer directly addresses the user's question, explaining how to use background tasks to send emails after user registration, with a clear code example.",
+        "check_pass": true
+      },
+      {
+        "check_name": "answer_clear",
+        "justification": "The answer is very clear and well-structured, providing numbered steps, code examples, and explanations. The code is formatted for easy readability.",
+        "check_pass": true
+      },
+      {
+        "check_name": "answer_citations",
+        "justification": "The agent references FastAPI documentation, and the code example is consistent with how background tasks are used in FastAPI.",
+        "check_pass": true
+      },
+      {
+        "check_name": "completeness",
+        "justification": "The response covers all key aspects of the question by explaining how to set up background tasks and providing a working example to send emails upon user registration.",
+        "check_pass": true
+      },
+      {
+        "check_name": "tool_call_search",
+        "justification": "The agent did not use a search tool.",
+        "check_pass": false
+      }
+    ],
+    "summary": "The agent's response is excellent, meeting all criteria except the use of a tool. The answer is clear, relevant, complete, and avoids hallucination."
+  },
+  {
+    "question": "How do I implement custom middleware in FastAPI to log request details (method, path, headers) before they reach the route handlers?",
+    "checklist": [
+      {
+        "check_name": "instructions_follow",
+        "justification": "The agent did not use a search tool.",
+        "check_pass": false
+      },
+      {
+        "check_name": "instructions_avoid",
+        "justification": "The agent accurately describes how to implement custom middleware and does not make up information.",
+        "check_pass": true
+      },
+      {
+        "check_name": "answer_relevant",
+        "justification": "The response directly answers the user's question, providing code and an explanation of how to implement custom middleware.",
+        "check_pass": true
+      },
+      {
+        "check_name": "answer_clear",
+        "justification": "The answer is well-structured and easy to understand, providing a clear explanation and a complete, runnable example.",
+        "check_pass": true
+      },
+      {
+        "check_name": "answer_citations",
+        "justification": "The response does not cite any specific documentation, but the example is valid and correctly reflects the way middleware works in FastAPI. Therefore, a citation is not strictly necessary for this task.",
+        "check_pass": false
+      },
+      {
+        "check_name": "completeness",
+        "justification": "The response provides a complete, runnable example that covers the key aspects of the question.",
+        "check_pass": true
+      },
+      {
+        "check_name": "tool_call_search",
+        "justification": "The agent did not use a search tool.",
+        "check_pass": false
+      }
+    ],
+    "summary": "The agent's response is well-structured, relevant, and provides a clear example. The agent did not use a search tool."
+  },
+  {
+    "question": "What's the recommended way to write unit tests for FastAPI endpoints that have dependencies injected through the Depends() mechanism?",
+    "checklist": [
+      {
+        "check_name": "instructions_follow",
+        "justification": "The agent did not explicitly mention searching the documentation before answering, but the answer is accurate and relevant to the question. It's difficult to say with certainty whether the agent followed the instruction to search the docs because it is not explicitly mentioned.",
+        "check_pass": false
+      },
+      {
+        "check_name": "instructions_avoid",
+        "justification": "The agent did not make up any information. The response is based on established FastAPI testing practices.",
+        "check_pass": true
+      },
+      {
+        "check_name": "answer_relevant",
+        "justification": "The response directly and correctly addresses the user's question about unit testing FastAPI endpoints with dependencies. It explains the recommended approach.",
+        "check_pass": true
+      },
+      {
+        "check_name": "answer_clear",
+        "justification": "The answer is clear, well-structured, and easy to understand. It provides a step-by-step explanation and a complete, executable example.",
+        "check_pass": true
+      },
+      {
+        "check_name": "answer_citations",
+        "justification": "The response doesn't cite specific documentation sections, but it accurately reflects the recommended approach as described in the FastAPI documentation.",
+        "check_pass": false
+      },
+      {
+        "check_name": "completeness",
+        "justification": "The response is comprehensive, covering the key aspects of unit testing FastAPI endpoints with dependencies, including dependency overriding, scope, and resetting. The example is also complete and executable.",
+        "check_pass": true
+      },
+      {
+        "check_name": "tool_call_search",
+        "justification": "The agent did not call any tools.",
+        "check_pass": false
+      }
+    ],
+    "summary": "The agent's response is accurate, well-structured, and provides a good example, but it doesn't mention searching the documentation or cite any specific parts of the documentation. Therefore it did not fully follow the instructions."
+  }
+]
